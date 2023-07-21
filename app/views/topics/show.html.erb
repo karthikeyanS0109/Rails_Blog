@@ -10,5 +10,13 @@
   <%= @topic.genre %>
 </p>
 
+<h2 >Posts</h2>
+<% for post in @topic.posts %>
+    <ul>
+      <li><%= post.description %></li>
+    </ul>
+<% end %>
+
 <%= link_to 'Edit', edit_topic_path(@topic) %> |
+<%= link_to 'Add post', topic_posts_path(@topic) %>
 <%= link_to 'Back', topics_path %>

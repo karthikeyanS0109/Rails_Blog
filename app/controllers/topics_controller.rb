@@ -30,10 +30,7 @@ class TopicsController < ApplicationController
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @topic.errors, status: :unprocessable_entity }
-<<<<<<< HEAD
         flash.now[:alert] = 'Topic could not be created. Please fix the errors.'
-=======
->>>>>>> e9ec5d15cb6d31feb4ff9355ee9933160a035013
       end
     end
   end
