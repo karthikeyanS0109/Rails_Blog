@@ -9,14 +9,16 @@
   <strong>Genre:</strong>
   <%= @topic.genre %>
 </p>
-
-<h2 >Posts</h2>
+<!--<div class="topic_show">-->
+<h2><ins>Here are the Posts</ins></h2>
+<!--</div>-->
+<!--<div class="topic_inner_show">-->
 <% for post in @topic.posts %>
     <ul>
       <li><%= post.description %></li>
     </ul>
 <% end %>
-
+<!--</div>-->
 <%= link_to 'Edit', edit_topic_path(@topic) %> |
 <%= link_to 'Add post', topic_posts_path(@topic) %>
 <%= link_to 'Back', topics_path %>
