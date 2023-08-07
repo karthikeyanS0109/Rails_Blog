@@ -10,5 +10,35 @@
   <%= @post.topic_id %>
 </p>
 
+<strong>Tags:</strong>
+<% @post.tags.each do |tag| %>
+  <%= link_to tag  do %>
+    <span class="tags"><%= tag.name %></span>
+  <% end %>
+<% end %>
+
+
+<h2>Comments:</h2>
+<% @post.comments&.each do |comment| %>
+  <div class="comment_show">
+    <p><%= comment.content %></p>
+  </div>
+  <%= button_to 'Delete', topic_post_comment_path(@topic, @post, comment), method: :delete, data: { confirm: 'Are you sure you want to delete this comment?' } %>
+  <hr />
+<% end %>
+
+
+<!-- Comment form -->
+<%= form_for([@topic ,@post, Comment.new]) do |form| %>
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_area :content, rows: 4 %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Save Comment' %>
+  </div>
+<% end %>
+
 <%= link_to 'Edit', edit_topic_post_path(@post) %> |
 <%= link_to 'Back', topic_posts_path %>

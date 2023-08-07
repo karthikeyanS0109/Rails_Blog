@@ -1,0 +1,41 @@
+class CommentsController < ApplicationController
+  before_action :get_topic_and_post
+  before_action :set_comment, only: [:create, :destroy]
+
+  def create
+    @comment = @post.comments.build(comment_params)
+
+    respond_to do |format|
+      if @comment.save
+        format.html { redirect_to topic_post_path(@topic, @post), notice: 'Comment was successfully created.' }
+        format.json { render :show, status: :created, location: @comment }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    @comment.destroy
+    respond_to do |format|
+      format.html { redirect_to topic_post_path(@topic, @post), notice: 'Comment was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+
+  def get_topic_and_post
+    @topic = Topic.find(params[:topic_id])
+    @post = @topic.posts.find(params[:post_id])
+  end
+
+  def set_comment
+    @comment = @post.comments.find_by(id: params[:id])
+  end
+
+  def comment_params
+    params.require(:comment).permit(:content)
+  end
+end

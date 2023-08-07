@@ -21,6 +21,13 @@
     <%= form.text_field :topic_id %>
   </div>
 
+  <div>
+    <%= form.label :tags %>
+    <%= form.text_field :tags, value: @post.tags.map(&:name).join(",") %>
+  </div>
+
+  <br>
+
   <div class="actions">
     <%= form.submit %>
   </div>

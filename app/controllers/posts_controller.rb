@@ -9,6 +9,9 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    @topic = Topic.find(params[:topic_id])
+    @post = @topic.posts.find(params[:id])
+    @tag = @post.tags
   end
 
   # GET /posts/new
@@ -22,7 +25,8 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = @topic.posts.build(post_params)
+    @post = @topic.posts.build(post_params.except(:tags))
+    create_or_delete_posts_tag(@post, params[:post][:tags])
 
     respond_to do |format|
       if @post.save
@@ -37,8 +41,9 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
+    create_or_delete_posts_tag(@post, params[:post][:tags])
     respond_to do |format|
-      if @post.update(post_params)
+      if @post.update(post_params.expect(:tags))
         format.html { redirect_to topic_post_path(@topic), notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -51,7 +56,6 @@ class PostsController < ApplicationController
   # DELETE /posts/1 or /posts/1.json
   def destroy
     @post.destroy
-
     respond_to do |format|
       format.html { redirect_to topic_posts_path(@topic), notice: "Post was successfully destroyed." }
       format.json { head :no_content }
@@ -60,6 +64,14 @@ class PostsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def create_or_delete_posts_tag(post, tags)
+        post.taggables.destroy_all
+        tags = tags.to_s.strip.split(',')
+        tags.each do |tag|
+          post.tags << Tag.find_or_create_by(name: tag.strip) unless tag.blank?
+        end
+    end
+
     def get_topic
       @topic = Topic.find(params[:topic_id])
     end
@@ -69,6 +81,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:description, :topic_id)
+      params.require(:post).permit(:description, :topic_id, :tags)
     end
 end
