@@ -119,6 +119,16 @@ RSpec.describe PostsController, type: :controller do
         expect(response).to render_template(:edit)
       end
     end
+    context "with valid attributes" do
+      it "updates the post and redirects to the topic_post_path with status 302" do
+        patch :update, params: { topic_id: topic.id, id: post.id, post: { description: "Updated description" } }
+        post.reload
+        expect(post.description).to eq("Updated description")
+
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(topic_post_path(topic, post))
+      end
+    end
   end
 
   describe "DELETE #destroy" do
@@ -133,6 +143,32 @@ RSpec.describe PostsController, type: :controller do
     it "redirects to the topic_posts_path" do
       delete :destroy, params: { topic_id: topic.id, id: post.id }
       expect(response).to redirect_to(topic_posts_path(topic))
+    end
+  end
+
+  describe "POST #create" do
+    let(:post_attributes) { { description: "New Post", topic_id: topic.id } }
+
+    context "with valid attributes" do
+      it "creates a new post and redirects to the topic_posts_path with status 302" do
+        expect {
+          post :create, params: { topic_id: topic.id, post: post_attributes }
+        }.to change(Post, :count).by(1)
+
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(topic_posts_path(topic))
+      end
+    end
+
+    context "with invalid attributes" do
+      it "does not create a new post and re-renders the new template with errors" do
+        expect {
+          post :create, params: { topic_id: topic.id, post: { description: nil, topic_id: topic.id } }
+        }.not_to change(Post, :count)
+
+        expect(response).not_to have_http_status(200)
+        expect(response).to render_template(:new)
+      end
     end
   end
 end

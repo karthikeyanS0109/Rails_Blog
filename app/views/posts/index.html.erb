@@ -16,7 +16,7 @@
       <tr>
         <td><%= post.description %></td>
         <td><%= post.topic.title %></td>
-        <td><%= link_to 'Show topic', [@topic] %></td>
+        <td><%= link_to 'Show Post', topic_post_path(@topic,post) %></td>
         <td><%= link_to 'Edit post', edit_topic_post_path(@topic, post) %></td>
         <td><%= button_to 'Destroy post', [@topic, post], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -26,4 +26,5 @@
 </div>
 <br>
 
-<%= link_to 'New Post', new_topic_post_path(@topic) %>
+<%= link_to 'New Post', new_topic_post_path(@topic) %> |
+<%= link_to 'Back to Topics', [@topic] %>
