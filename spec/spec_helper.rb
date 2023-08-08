@@ -95,5 +95,5 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
-  require 'shoulda/matchers'
+  # require 'shoulda/matchers'
 end

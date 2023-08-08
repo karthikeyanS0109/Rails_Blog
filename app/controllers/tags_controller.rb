@@ -3,11 +3,20 @@ class TagsController < ApplicationController
 
   # GET /tags or /tags.json
   def index
+    # @topic = Topic.find(params[:topic_id])
     @tags = Tag.all
+    # redirect_to topic_post_url
+  end
+
+  def posts
+    @tag = Tag.find(params[:id])
+    @posts = @tag.posts
   end
 
   # GET /tags/1 or /tags/1.json
   def show
+    @tag = Tag.find(params[:id])
+    @posts = @tag.posts
   end
 
   # GET /tags/new

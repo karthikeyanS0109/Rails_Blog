@@ -12,11 +12,24 @@
 
 <strong>Tags:</strong>
 <% @post.tags.each do |tag| %>
-  <%= link_to tag  do %>
-    <span class="tags"><%= tag.name %></span>
+  <%= link_to tag, style:"text-decoration:none"  do %>
+    <span class="tags"><%= tag.name.capitalize %></span>
   <% end %>
 <% end %>
 
+<h3>Rating Counts:</h3>
+<% (1..5).each do |value| %>
+  <div><%= value %> star: <%= @rating_counts[value] || 0 %><br></div>
+<% end %>
+
+<h2>Ratings:</h2>
+<%= form_for [@topic, @post, Rating.new] do |f| %>
+  1 stars<%= f.radio_button :value, 1, onchange: 'this.form.submit();' %><br>
+  2 stars<%= f.radio_button :value, 2, onchange: 'this.form.submit();' %><br>
+  3 stars<%= f.radio_button :value, 3, onchange: 'this.form.submit();' %><br>
+  4 stars<%= f.radio_button :value, 4, onchange: 'this.form.submit();' %><br>
+  5 stars<%= f.radio_button :value, 5, onchange: 'this.form.submit();' %><br>
+<% end %>
 
 <h2>Comments:</h2>
 <% @post.comments&.each do |comment| %>
@@ -24,7 +37,7 @@
     <p><%= comment.content %></p>
   </div>
   <%= button_to 'Delete', topic_post_comment_path(@topic, @post, comment), method: :delete, data: { confirm: 'Are you sure you want to delete this comment?' } %>
-  <hr />
+  <hr>
 <% end %>
 
 

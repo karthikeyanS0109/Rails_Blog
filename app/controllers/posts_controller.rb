@@ -4,13 +4,15 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts =  @topic.posts
+    @posts = @topic.posts
   end
 
   # GET /posts/1 or /posts/1.json
   def show
     @topic = Topic.find(params[:topic_id])
     @post = @topic.posts.find(params[:id])
+    @rating = Rating.new
+    @rating_counts = @post.ratings.group(:value).count
     @tag = @post.tags
   end
 

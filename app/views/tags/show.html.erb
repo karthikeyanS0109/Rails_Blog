@@ -5,5 +5,13 @@
   <%= @tag.name %>
 </p>
 
+<h1>Related Posts for <%= @tag.name %></h1>
+<br>
+<% @posts.each do |post| %>
+  <h2>Posts:<%= post.description %></h2>
+  <p>Topic_id:<%= post.topic_id %></p>
+  <hr>
+<% end %>
+
 <%= link_to 'Edit', edit_tag_path(@tag) %> |
 <%= link_to 'Back', tags_path %>
