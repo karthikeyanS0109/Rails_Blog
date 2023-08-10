@@ -34,5 +34,13 @@ RSpec.describe PostsController, type: :routing do
     it "routes to #destroy" do
       expect(delete: "/topics/1/posts/1").to route_to("posts#destroy", topic_id: "1", id: "1")
     end
+    it "routes to Active Storage's direct disk path for images" do
+      expect(get: "/rails/active_storage/disk/:encoded_key/*filename").to route_to(
+                                                                            controller: "active_storage/disk",
+                                                                            action: "show",
+                                                                            encoded_key: ":encoded_key",
+                                                                            filename: "*filename"
+                                                                          )
+    end
   end
 end

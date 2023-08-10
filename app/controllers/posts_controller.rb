@@ -45,7 +45,7 @@ class PostsController < ApplicationController
   def update
     create_or_delete_posts_tag(@post, params[:post][:tags])
     respond_to do |format|
-      if @post.update(post_params.expect(:tags))
+      if @post.update(post_params.except(:tags))
         format.html { redirect_to topic_post_path(@topic), notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -83,6 +83,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:description, :topic_id, :tags)
+      params.require(:post).permit(:description, :topic_id, :tags, :image)
     end
 end
