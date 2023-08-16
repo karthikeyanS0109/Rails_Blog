@@ -1,7 +1,7 @@
 class Post < ApplicationRecord
   validates :description,presence: true
-  has_one_attached :image
   belongs_to :topic
+  has_one_attached :image
   has_many :comments
   has_many :ratings
   has_many :taggables,dependent: :destroy
