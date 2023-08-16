@@ -4,9 +4,12 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = @topic.posts
+    @posts = (if @topic.present?
+               @topic.posts.all
+              else
+                Post.all.includes(:topic)
+              end)
   end
-
   # GET /posts/1 or /posts/1.json
   def show
     @topic = Topic.find(params[:topic_id])
@@ -75,7 +78,7 @@ class PostsController < ApplicationController
     end
 
     def get_topic
-      @topic = Topic.find(params[:topic_id])
+      @topic = Topic.find(params[:topic_id]) if params[:topic_id].present?
     end
     def set_post
       @post = @topic.posts.find(params[:id])

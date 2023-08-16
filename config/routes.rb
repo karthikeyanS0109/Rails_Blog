@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   resources :tags do
     # Nested route for related posts of a specific tag
     member do
@@ -14,9 +15,10 @@ Rails.application.routes.draw do
     end
   end
 
-  # gets '/posts',to => "posts#index"
+  resources :posts, only: [:index]
 
-  get 'welcome/index'
+  # get 'welcome/index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root 'welcome#index'
+
+  root 'topics#index'
 end

@@ -1,0 +1,10 @@
+<nav class="navbar bg-body-tertiary" data-bs-theme="dark">
+  <div class="container w-100 d-flex justify-content-end">
+    <a class="navbar-brand" href="#"></a>
+    <% if user_signed_in? %>
+      <%= button_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-warning navbar-brand" %>
+    <% else %>
+      <%= link_to 'Sign in', new_user_session_path, class: "navbar-brand" %>
+    <% end %>
+  </div>
+</nav>

@@ -1,10 +1,9 @@
 <p id="notice"><%= notice %></p>
-
+<%= link_to 'New Topic', new_topic_path, class:"container d-flex justify-content-end" %>
 <h1>Topics</h1>
 <%#= @topics.count %>
-<%#== pagy_nav(@pagy)%>
 <div class="topic">
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Title</th>
@@ -18,14 +17,15 @@
       <tr>
         <td><%= topic.title %></td>
         <td><%= topic.genre %></td>
-        <td><%= link_to 'Show', topic %></td>
-        <td><%= link_to 'Edit', edit_topic_path(topic) %></td>
-        <td><%= button_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', topic, class:"btn btn-info" %></td>
+        <td><%= link_to 'Edit', edit_topic_path(topic), class: "btn btn-success" %></td>
+        <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 </div>
 <br>
-
-<%= link_to 'New Topic', new_topic_path %>
+<div class="container d-flex justify-content-center">
+<%== pagy_nav(@pagy)%>
+</div>

@@ -1,8 +1,9 @@
 <p id="notice"><%= notice %></p>
 
+<% if @posts.length > 0 %>
+
 <h1>Posts</h1>
-<div class="post">
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Description</th>
@@ -16,15 +17,23 @@
       <tr>
         <td><%= post.description %></td>
         <td><%= post.topic.title %></td>
-        <td><%= link_to 'Show Post', topic_post_path(@topic,post) %></td>
-        <td><%= link_to 'Edit post', edit_topic_post_path(@topic, post) %></td>
-        <td><%= button_to 'Destroy post', [@topic, post], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+         <% if @topic.present? %>
+        <td><%= link_to 'Show Post', topic_post_path(@topic,post),class: "btn btn-info" %></td>
+        <td><%= link_to 'Edit post', edit_topic_post_path(@topic, post),class: "btn btn-success" %></td>
+        <td><%= button_to 'Destroy post', [@topic, post], method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-danger" %></td>
+          <% else %>
+          <td><%= link_to 'Show Post', topic_post_path(post.topic, post),class: "btn btn-info" %></td>
+          <td><%= link_to 'Edit post', edit_topic_post_path(post.topic, post),class: "btn btn-success" %></td>
+          <td><%= button_to 'Destroy post', [post.topic, post], method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-danger" %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
-</div>
 <br>
+<% else %>
+   <p>No Posts available, you can also create the posts and view this page.</p>
+<% end %>
 
-<%= link_to 'New Post', new_topic_post_path(@topic) %> |
-<%= link_to 'Back to Topic', [@topic] %>
+<%= link_to 'New Post', new_topic_post_path(@topic)  if @topic.present? %> |
+<%= link_to 'Back to Topic', [@topic] if @topic.present? %>

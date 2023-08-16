@@ -11,24 +11,24 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field w-50 h-50 ms-2">
     <%= form.label :description %>
     <%= form.text_field :description %>
   </div>
-
-  <div class="field">
+<br>
+  <div class="field w-50 h-50 ms-5">
     <%= form.label :topic_id %>
     <%= form.text_field :topic_id %>
   </div>
-
-  <div>
+<br>
+  <div class="field w-50 h-50 ms-5">
     <%= form.label :tags %>
     <%= form.text_field :tags, value: @post.tags.map(&:name).join(",") %>
   </div>
 
   <br>
   <%= form.file_field :image%>
-  <br>
+  <br><br>
   <div class="actions">
     <%= form.submit %>
   </div>

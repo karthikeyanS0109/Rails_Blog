@@ -12,7 +12,7 @@
 
 <strong>Tags:</strong>
 <% @post.tags.each do |tag| %>
-  <%= link_to tag, style:"text-decoration:none"  do %>
+  <%= link_to tag, class: "btn btn-info"  do %>
     <span class="tags"><%= tag.name.capitalize %></span>
   <% end %>
 <% end %>
