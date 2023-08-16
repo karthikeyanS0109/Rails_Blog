@@ -6,4 +6,5 @@ class Post < ApplicationRecord
   has_many :ratings
   has_many :taggables,dependent: :destroy
   has_many :tags,through: :taggables
+  belongs_to :user
 end

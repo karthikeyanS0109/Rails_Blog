@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
 
   def create
     @comment = @post.comments.build(comment_params)
+    @comment.user = current_user
 
     respond_to do |format|
       if @comment.save
@@ -18,6 +19,8 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
+    # @comment.user = current_user
+
     respond_to do |format|
       format.html { redirect_to topic_post_path(@topic, @post), notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }

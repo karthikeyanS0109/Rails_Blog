@@ -26,12 +26,14 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+    authorize! :update, @post
   end
 
   # POST /posts or /posts.json
   def create
     @post = @topic.posts.build(post_params.except(:tags))
     create_or_delete_posts_tag(@post, params[:post][:tags])
+    @post.user = current_user
 
     respond_to do |format|
       if @post.save
@@ -47,6 +49,8 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
     create_or_delete_posts_tag(@post, params[:post][:tags])
+    @post.user = current_user
+
     respond_to do |format|
       if @post.update(post_params.except(:tags))
         format.html { redirect_to topic_post_path(@topic), notice: "Post was successfully updated." }
@@ -60,7 +64,9 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
+    authorize! :destroy, @post
     @post.destroy
+
     respond_to do |format|
       format.html { redirect_to topic_posts_path(@topic), notice: "Post was successfully destroyed." }
       format.json { head :no_content }
