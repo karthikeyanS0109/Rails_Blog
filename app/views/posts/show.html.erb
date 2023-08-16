@@ -27,9 +27,13 @@
 
 <h3>Rating Counts:</h3>
 <% (1..5).each do |value| %>
-  <div><%= value %> star: <%= @rating_counts[value] || 0 %><br></div>
+  <div><%= value %> star: <%= @rating_counts[value] || 0 %></div>
 <% end %>
-
+<br>
+<!--<div>-->
+<!--Average:<%#= @post.ratings.average(:value).round(1) %>-->
+<!--</div>-->
+<br>
 <h2>Ratings:</h2>
 <%= form_for [@topic, @post, Rating.new] do |f| %>
   1 stars<%= f.radio_button :value, 1, onchange: 'this.form.submit();' %><br>

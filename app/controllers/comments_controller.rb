@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:create, :destroy]
 
   def create
-    @comment = @post.comments.build(comment_params)
+    @comment = @post.comments.build(comment_params.merge(user_id: current_user.id))
     @comment.user = current_user
 
     respond_to do |format|
@@ -39,6 +39,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:content)
+    params.require(:comment).permit(:content, :user_id)
   end
 end

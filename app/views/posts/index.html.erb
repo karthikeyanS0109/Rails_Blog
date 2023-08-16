@@ -8,6 +8,8 @@
     <tr>
       <th>Description</th>
       <th>Topic</th>
+      <th>Average rating</th>
+      <th>Comment count</th>
       <th colspan="3">Action</th>
     </tr>
   </thead>
@@ -17,6 +19,18 @@
       <tr>
         <td><%= post.description %></td>
         <td><%= post.topic.title %></td>
+        <td><% if post.ratings.any? %>
+          <%= post.ratings.average(:value).round(1) %>
+            <% else %>
+            <p>No ratings available</p>
+          <% end %>
+        </td>
+        <td><% if post.comments.any? %>
+          <%= post.comments.count %>
+            <% else %>
+            <p>No comments available</p>
+          <% end %>
+        </td>
          <% if @topic.present? %>
         <td><%= link_to 'Show Post', topic_post_path(@topic,post),class: "btn btn-info" %></td>
         <td><%= link_to 'Edit post', edit_topic_post_path(@topic, post),class: "btn btn-success" %></td>

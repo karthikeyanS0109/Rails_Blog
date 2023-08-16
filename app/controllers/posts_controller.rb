@@ -14,9 +14,9 @@ class PostsController < ApplicationController
   def show
     @topic = Topic.find(params[:topic_id])
     @post = @topic.posts.find(params[:id])
+    @tag = @post.tags
     @rating = Rating.new
     @rating_counts = @post.ratings.group(:value).count
-    @tag = @post.tags
   end
 
   # GET /posts/new
