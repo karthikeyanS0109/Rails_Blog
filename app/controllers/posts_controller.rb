@@ -73,6 +73,12 @@ class PostsController < ApplicationController
     end
   end
 
+  def read_unread
+    @post = Post.find(params[:id])
+    @post.users << current_user
+    head :ok
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def create_or_delete_posts_tag(post, tags)

@@ -10,6 +10,7 @@
       <th>Topic</th>
       <th>Average rating</th>
       <th>Comment count</th>
+      <th>Post status</th>
       <th colspan="3">Action</th>
     </tr>
   </thead>
@@ -29,6 +30,13 @@
           <%= post.comments.count %>
             <% else %>
             <p>No comments available</p>
+          <% end %>
+        </td>
+        <td>
+          <% if post.user_ids.include?(current_user.id) %>
+          <p>read</p>
+          <% else %>
+          <p>unread</p>
           <% end %>
         </td>
          <% if @topic.present? %>

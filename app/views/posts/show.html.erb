@@ -67,3 +67,32 @@
 
 <%= link_to 'Edit', edit_topic_post_path(@post) %> |
 <%= link_to 'Back', topic_posts_path %>
+
+<% if @post.user_ids.include?(current_user.id) == false %>
+<script>
+  let stat = $("#read_unread");
+  stat.text("unread");
+  $(document).ready(function(){
+      let token = $('meta[name="csrf-token"]').attr('content');
+      console.log(token);
+    $.ajax({
+        url: '<%= read_unread_topic_post_path(@topic, @post) %>',
+        type: 'POST',
+        dataType: 'script',
+        headers: { 'X-CSRF-Token': token },
+        data: {
+           topic_id: <%= @topic.id %>,
+           id: <%= @post.id %>,
+        },
+        success: function(data){
+          alert("post has been read");
+        },
+        error: function(){
+          alert("error");
+        }
+    })
+  })
+  <% else %>
+  stat.text("read");
+  <% end %>
+</script>
