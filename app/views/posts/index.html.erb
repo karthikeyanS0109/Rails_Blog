@@ -1,61 +1,111 @@
-<p id="notice"><%= notice %></p>
+<div id="post-container">
+  <p id="notice"><%= notice %></p>
+  <%= link_to 'Back to Topic', [@topic], class:"container d-flex justify-content-end" if @topic.present? %>
+  <% if @posts.length > 0 %>
 
-<% if @posts.length > 0 %>
-
-<h1>Posts</h1>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th>Topic</th>
-      <th>Average rating</th>
-      <th>Comment count</th>
-      <th>Post status</th>
-      <th colspan="3">Action</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @posts.each do |post| %>
+    <h1>Posts</h1>
+    <table class="table">
+      <thead>
       <tr>
-        <td><%= post.description %></td>
-        <td><%= post.topic.title %></td>
-        <td><% if post.ratings.any? %>
-          <%= post.ratings.average(:value).round(1) %>
-            <% else %>
-            <p>No ratings available</p>
-          <% end %>
-        </td>
-        <td><% if post.comments.any? %>
-          <%= post.comments.count %>
-            <% else %>
-            <p>No comments available</p>
-          <% end %>
-        </td>
-        <td>
-          <% if post.user_ids.include?(current_user.id) %>
-          <p>Read</p>
-          <% else %>
-          <p>Unread</p>
-          <% end %>
-        </td>
-         <% if @topic.present? %>
-        <td><%= link_to 'Show Post', topic_post_path(@topic,post),class: "btn btn-info" %></td>
-        <td><%= link_to 'Edit post', edit_topic_post_path(@topic, post),class: "btn btn-success" %></td>
-        <td><%= button_to 'Destroy post', [@topic, post], method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-danger" %></td>
-          <% else %>
-          <td><%= link_to 'Show Post', topic_post_path(post.topic, post),class: "btn btn-info" %></td>
-          <td><%= link_to 'Edit post', edit_topic_post_path(post.topic, post),class: "btn btn-success" %></td>
-          <td><%= button_to 'Destroy post', [post.topic, post], method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-danger" %></td>
-        <% end %>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Topic</th>
+        <th>Average rating</th>
+        <th>Comment count</th>
+        <th>Post status</th>
+        <th colspan="3">Action</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<br>
-<% else %>
-   <p>No Posts available, you can also create the posts and view this page.</p>
-<% end %>
+      </thead>
 
-<%= link_to 'New Post', new_topic_post_path(@topic)  if @topic.present? %> |
-<%= link_to 'Back to Topic', [@topic] if @topic.present? %>
+      <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td><%= post.title%></td>
+          <td><%= post.description %></td>
+          <td><%= post.topic.title %></td>
+          <td><% if post.ratings.any? %>
+              <%= post.ratings.average(:value).round(1) %>
+            <% else %>
+              <p>No ratings available</p>
+            <% end %>
+          </td>
+          <td><% if post.comments.any? %>
+              <%= post.comments.count %>
+            <% else %>
+              <p>No comments available</p>
+            <% end %>
+          </td>
+          <td>
+            <% if post.user_ids.include?(current_user.id) %>
+              <p>Read</p>
+            <% else %>
+              <p>Unread</p>
+            <% end %>
+          </td>
+          <% if @topic.present? %>
+            <td><%= link_to 'Show Post', topic_post_path(@topic,post),class: "btn btn-info" %></td>
+            <td><%= link_to 'Edit post', edit_topic_post_path(@topic, post),class: "btn btn-success" %></td>
+            <td><%= button_to 'Destroy post', [@topic, post], method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-danger" %></td>
+          <% else %>
+            <td><%= link_to 'Show Post', topic_post_path(post.topic, post),class: "btn btn-info" %></td>
+            <td><%= link_to 'Edit post', edit_topic_post_path(post.topic, post),class: "btn btn-success" %></td>
+            <td><%= button_to 'Destroy post', [post.topic, post], method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-danger" %></td>
+          <% end %>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <br>
+  <% else %>
+    <p>No Posts available, you can also create the posts and view this page.</p>
+  <% end %>
+
+<div id="form-container">
+</div>
+  <div id="loading-spinner">
+  </div>
+
+<button id="form-btn">New Post</button>
+<button id="cancel-btn">Cancel</button>
+</div>
+
+<script>
+    let container = $("#post-container");
+    let formContainer = $("#form-container");
+    let formBtn = $("#form-btn");
+    let cancelBtn = $("#cancel-btn");
+    let loadingSpinner = $(".loading-spinner"); // Make sure this class matches your HTML
+    let form = null;
+
+    // formContainer.hide(); // Hide form container initially
+    cancelBtn.hide();
+    $(document).ready(function(){
+        formBtn.click(function(){
+            $.ajax({
+                url: '<%= new_topic_post_path(@topic) %>',
+                type: 'GET',
+                dataType: 'script',
+                success: function(data){
+                    formBtn.hide();
+                    cancelBtn.show();
+                    form_set(); // Corrected function call
+                }
+            });
+        });
+
+        cancelBtn.click(function(){
+            formBtn.show();
+            formContainer.empty();
+            cancelBtn.hide();
+        });
+
+        function form_set(){
+            setTimeout(function (){
+                form = $(".new_form");
+                form.on("submit", function (){
+                    loadingSpinner.show(); // Show loading spinner when form is submitted
+                });
+            }, 100);
+        }
+    });
+</script>

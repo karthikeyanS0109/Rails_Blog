@@ -22,6 +22,10 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = @topic.posts.build
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /posts/1/edit
@@ -37,11 +41,14 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to topic_posts_path(@topic), notice: "Post was successfully created." }
+        @rating_counts = @post.ratings.group(:value).count
+        format.html { redirect_to topic_post_path(@topic, @post), notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
+        format.js
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
+        format.js { render "posts/errors" }
       end
     end
   end
@@ -98,6 +105,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:description, :topic_id, :tags, :image)
+      params.require(:post).permit(:title, :description, :topic_id, :tags, :image)
     end
 end
