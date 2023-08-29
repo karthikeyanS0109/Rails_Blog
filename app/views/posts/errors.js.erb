@@ -1,0 +1,10 @@
+setTimeout(function(){
+    formContainer.prepend(
+        '<div id="error-explanation">'+
+        "<%= @post.errors.full_messages %>"+
+        '</div>'
+    )
+    setTimeout(function(){
+        $("#error-explanation").remove();
+    },500);
+},1000)

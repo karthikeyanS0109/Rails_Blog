@@ -1,0 +1,107 @@
+<div class="post-details">
+  <!-- Post content -->
+  <div>
+    <strong>Post Title:</strong> <%= @post.title %>
+  </div>
+  <div>
+    <strong>Description:</strong> <%= @post.description %>
+  </div>
+  <div>
+    <strong>Topic:</strong> <%= @post.topic_id %>
+  </div>
+
+  <!-- Image -->
+  <% if @post.image.attached? %>
+    <%= image_tag @post.image, style: "width:300px;height:200px" %>
+  <% else %>
+    <p>No image available for this post.</p>
+  <% end %>
+
+  <!-- Tags -->
+  <div>
+    <strong>Tags:</strong>
+    <% @post.tags.each do |tag| %>
+      <%= link_to tag, class: "btn btn-info" do %>
+        <span class="tags"><%= tag.name.capitalize %></span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <h3>Rating Counts:</h3>
+  <% (1..5).each do |value| %>
+    <div><%= value %> star: <%= @rating_counts[value] || 0 %></div>
+  <% end %>
+  <br>
+
+  <!-- Ratings -->
+  <h2>Ratings:</h2>
+  <%= form_for [@topic, @post, Rating.new] do |f| %>
+    <% (1..5).each do |value| %>
+      <%= "#{value} stars" %>
+      <%= f.radio_button :value, value, onchange: 'this.form.submit();' %><br>
+    <% end %>
+  <% end %>
+
+  <!-- Comments -->
+  <h2>Comments:</h2>
+  <% @post.comments&.each do |comment| %>
+    <div class="comment-show">
+      <p><%= comment.content %></p>
+      <%= button_to 'Delete', topic_post_comment_path(@topic, @post, comment),
+                    method: :delete, data: { confirm: 'Are you sure you want to delete this comment?' } %>
+    </div>
+    <hr>
+  <% end %>
+
+  <!-- Comment form -->
+  <%= form_for([@topic, @post, Comment.new], local: true, id: 'comment-form') do |form| %>
+    <div class="field">
+      <%= form.label :content %>
+      <%= form.text_area :content, rows: 4 %>
+    </div>
+    <div class="actions">
+      <%= form.submit 'Save Comment', id: 'submit-button' %>
+    </div>
+  <% end %>
+
+  <%= link_to 'Edit', edit_topic_post_path(@topic,@post) %> |
+  <%= link_to 'Back', topic_posts_path(@topic) %>
+
+  <script>
+      // Read/unread status
+      $(document).ready(function () {
+          let token = $('meta[name="csrf-token"]').attr('content');
+          if (!<%= @post.user_ids.include?(current_user.id) %>) {
+              $.ajax({
+                  url: '<%= read_unread_topic_post_path(@topic, @post) %>',
+                  type: 'POST',
+                  dataType: 'script',
+                  headers: { 'X-CSRF-Token': token },
+                  data: {
+                      topic_id: <%= @topic.id %>,
+                      id: <%= @post.id %>,
+                  },
+                  success: function (data) {
+                      alert("Post has been read.");
+                  },
+                  error: function () {
+                      alert("Error.");
+                  }
+              });
+          }
+      });
+
+      // Color change
+      $(document).ready(function () {
+          let colorChange = $(".color-change");
+          let count = 0;
+          $("#changes").click(function () {
+              const colorProperties = count % 2 === 0
+                  ? { color: "black", backgroundColor: "lightgrey" }
+                  : { color: "white", backgroundColor: "black" };
+              colorChange.css(colorProperties);
+              count++;
+          });
+      });
+  </script>
+</div>
