@@ -3,6 +3,6 @@ setTimeout(function(){
     container.html(
       "<%= j render 'posts/post_show'%>"
     );
-    history.pushState(null, null, "<%= topic_post_path(@topic, @post)%>");
+//    history.pushState(null, null, "<%= topic_post_path(@topic, @post)%>");
     loadingSpinner.hide(); // Hide loading spinner after content is loaded
 }, 500);
