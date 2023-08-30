@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_21_100520) do
+ActiveRecord::Schema.define(version: 2023_08_30_085212) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -38,6 +38,16 @@ ActiveRecord::Schema.define(version: 2023_08_21_100520) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "comment_ratings", force: :cascade do |t|
+    t.integer "value"
+    t.integer "user_id", null: false
+    t.integer "comment_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["comment_id"], name: "index_comment_ratings_on_comment_id"
+    t.index ["user_id"], name: "index_comment_ratings_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -88,6 +98,13 @@ ActiveRecord::Schema.define(version: 2023_08_21_100520) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "titles", force: :cascade do |t|
+    t.string "name"
+    t.string "author"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "topics", force: :cascade do |t|
     t.string "title"
     t.string "genre"
@@ -109,6 +126,8 @@ ActiveRecord::Schema.define(version: 2023_08_21_100520) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comment_ratings", "comments"
+  add_foreign_key "comment_ratings", "users"
   add_foreign_key "comments", "posts"
   add_foreign_key "posts", "topics"
   add_foreign_key "ratings", "posts"

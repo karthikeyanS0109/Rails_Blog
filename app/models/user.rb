@@ -8,4 +8,7 @@ class User < ApplicationRecord
   has_many :posts
 
   has_and_belongs_to_many :posts, join_table: "posts_users_read_status", dependent: :destroy
+
+  has_one :comment_rating
+  has_one :comment,through: :comment_rating
 end

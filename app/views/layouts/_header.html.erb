@@ -3,7 +3,7 @@
     <a class="navbar-brand" href="#"></a>
     <% if user_signed_in? %>
       <%= button_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-warning navbar-brand" %>
-    <% else %>
+  <% else %>
       <%= link_to 'Sign in', new_user_session_path, class: "navbar-brand" %>
     <% end %>
   </div>

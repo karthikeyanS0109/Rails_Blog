@@ -1,0 +1,27 @@
+<h1>Comments</h1>
+
+<h4>
+  <strong>Comment Creator:</strong>
+  <%= @comment.user.email %>
+</h4>
+<h4>
+  <strong>Comment Content:</strong>
+  <%= @comment.content %>
+</h4>
+<table class="table">
+  <thead>
+  <tr>
+    <th>Comment Raters</th>
+    <th>Ratings</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @comment.comment_ratings.each do |rating| %>
+    <tr>
+      <td><%= rating.user.email %></td>
+      <td><%= rating.value %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Back', topic_post_path(@topic, @post) %>

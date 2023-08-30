@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   resources :topics do
     resources :posts do
       post "read_unread", on: :member
-      resources :comments
+      resources :comments do
+        resources :comment_ratings,only: [:create, :update]
+      end
       resources :ratings, only: [:create]
     end
   end

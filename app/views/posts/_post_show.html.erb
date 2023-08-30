@@ -1,4 +1,5 @@
 <div class="post-details">
+  <p class="text-primary" id="notice"><%= notice %></p>
   <!-- Post content -->
   <div>
     <strong>Post Title:</strong> <%= @post.title %>
@@ -47,7 +48,15 @@
   <% @post.comments&.each do |comment| %>
     <div class="comment-show">
       <p><%= comment.content %></p>
-      <%= button_to 'Delete', topic_post_comment_path(@topic, @post, comment),
+      <%= form_for [@topic, @post, comment, comment.comment_ratings.find_by(user_id: current_user.id) || CommentRating.new] do |f| %>
+        <% (1..5).each do |value| %>
+          <%= "#{value} " %>
+          <%= f.radio_button :value, value %>
+        <% end %>
+        <%= f.submit 'Update Ratings', class: 'btn btn-info' %>
+      <% end %>
+      <%= link_to 'Show comments', topic_post_comment_path(@topic, @post, comment) %> |
+      <%= link_to 'Delete', topic_post_comment_path(@topic, @post, comment),
                     method: :delete, data: { confirm: 'Are you sure you want to delete this comment?' } %>
     </div>
     <hr>

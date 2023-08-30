@@ -1,6 +1,10 @@
 class CommentsController < ApplicationController
   before_action :get_topic_and_post
-  before_action :set_comment, only: [:create, :destroy]
+  before_action :set_comment, only: [:create, :destroy, :show]
+
+  def show
+    @comment_ratings = @comment.comment_ratings.find_by(user_id: current_user.id) || @comment.comment_ratings.new
+  end
 
   def create
     @comment = @post.comments.build(comment_params.merge(user_id: current_user.id))
