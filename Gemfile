@@ -65,3 +65,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'pagy', '~> 5.10'
 gem 'devise'
 gem 'cancancan', '~> 3.2', '>= 3.2.1'
+gem 'bullet'

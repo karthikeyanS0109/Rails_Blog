@@ -16,7 +16,7 @@
   </tr>
   </thead>
   <tbody>
-  <% @comment.comment_ratings.each do |rating| %>
+  <% @comment.comment_ratings.includes([:user]).each do |rating| %>
     <tr>
       <td><%= rating.user.email %></td>
       <td><%= rating.value %></td>

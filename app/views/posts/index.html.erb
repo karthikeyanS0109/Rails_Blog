@@ -60,9 +60,6 @@
     <p>No Posts available, you can also create the posts and view this page.</p>
   <% end %>
 
-  <div class="container d-flex justify-content-center">
-  <%== pagy_nav(@pagy)%>
-  </div>
 
 <div id="form-container">
 </div>
@@ -72,6 +69,7 @@
 <button id="form-btn">New Post</button>
 <button id="cancel-btn">Cancel</button>
 </div>
+
 
 <script>
     let container = $("#post-container");
@@ -113,3 +111,4 @@
         }
     });
 </script>
+
