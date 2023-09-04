@@ -4,10 +4,10 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = (if @topic.present?
-               @topic.posts.all
+    @pagy,@posts = (if @topic.present?
+                      pagy(@topic.posts.all,items:5)
               else
-                Post.all.includes(:topic)
+                pagy(Post.all.includes(:topic),items:5)
               end)
   end
   # GET /posts/1 or /posts/1.json
