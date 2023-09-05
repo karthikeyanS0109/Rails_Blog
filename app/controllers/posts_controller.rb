@@ -4,11 +4,22 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = (if @topic.present?
+    @posts =  (if @topic.present?
                       (@topic.posts.all.includes([:comments, :ratings]))
               else
                 Post.all.includes(:topic)
-              end)
+               end)
+
+    if params[:from_date].present? && params[:to_date].present?
+      @from_date = Date.parse(params[:from_date])
+      @to_date = Date.parse(params[:to_date])
+    else
+      # If no parameters provided, set default date range
+      @from_date = 1.day.ago.to_date
+      @to_date = Date.current
+    end
+
+    @filtered_posts = @topic.posts.filtered_by_date_range(@from_date, @to_date)
   end
   # GET /posts/1 or /posts/1.json
   def show

@@ -3,12 +3,12 @@
 <h1>Topics</h1>
 <%#= @topics.count %>
 <div class="topic">
-<table class="table">
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Title</th>
       <th>Genre</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -19,7 +19,7 @@
         <td><%= topic.genre %></td>
         <td><%= link_to 'Show', topic, class:"btn btn-info" %></td>
         <td><%= link_to 'Edit', edit_topic_path(topic), class: "btn btn-success" %></td>
-        <td><%= button_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+        <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
         <td><%= link_to 'Posts_list', topic_posts_path(topic), class: "btn btn-info" %></td>
       </tr>
     <% end %>

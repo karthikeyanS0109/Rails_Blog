@@ -98,13 +98,6 @@ ActiveRecord::Schema.define(version: 2023_08_30_085212) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "titles", force: :cascade do |t|
-    t.string "name"
-    t.string "author"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "topics", force: :cascade do |t|
     t.string "title"
     t.string "genre"

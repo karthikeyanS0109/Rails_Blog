@@ -4,7 +4,7 @@
   <% if @posts.length > 0 %>
 
     <h1>Posts</h1>
-    <table class="table">
+    <table class="table table-hover">
       <thead>
       <tr>
         <th>Title</th>
@@ -68,6 +68,27 @@
 
 <button id="form-btn">New Post</button>
 <button id="cancel-btn">Cancel</button>
+
+  <br><br>
+  <h1>Filtered Posts for <%= @topic.title %></h1>
+  <%= form_tag(topic_posts_path(@topic), method: :get, id: "date-filter-form") do %>
+    <label for="from_date">From Date:</label>
+    <%= text_field_tag "from_date", nil, class: "datepicker" %>
+
+    <label for="to_date">To Date:</label>
+    <%= text_field_tag "to_date", nil, class: "datepicker" %>
+
+    <%= submit_tag "Show Details" %>
+  <% end %>
+
+<br>
+
+  <ul>
+    <% @filtered_posts.each do |post| %>
+      <li><%= post.title %></li>
+    <% end %>
+  </ul>
+
 </div>
 
 
@@ -112,3 +133,8 @@
     });
 </script>
 
+<script>
+    $(document).ready(function () {
+        $(".datepicker").datepicker();
+    });
+</script>
