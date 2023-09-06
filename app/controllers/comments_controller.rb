@@ -12,7 +12,8 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to topic_post_path(@topic, @post), notice: 'Comment was successfully created.' }
+        flash[:success] = 'Comment was successfully created.'
+        format.html { redirect_to topic_post_path(@topic, @post) }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -26,7 +27,8 @@ class CommentsController < ApplicationController
     # @comment.user = current_user
 
     respond_to do |format|
-      format.html { redirect_to topic_post_path(@topic, @post), notice: 'Comment was successfully destroyed.' }
+      flash[:danger] = 'Comment was successfully destroyed.'
+      format.html { redirect_to topic_post_path(@topic, @post) }
       format.json { head :no_content }
     end
   end

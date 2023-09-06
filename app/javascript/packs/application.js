@@ -14,3 +14,14 @@ ActiveStorage.start()
 //
 // console.log("Hello");
 
+
+document.addEventListener('DOMContentLoaded', function() {
+    var flashMessages = document.querySelectorAll('.auto-dismiss');
+
+    flashMessages.forEach(function(message) {
+        setTimeout(function() {
+            message.style.display = 'none';
+        }, 1000); // 5000 milliseconds (5 seconds)
+    });
+});
+

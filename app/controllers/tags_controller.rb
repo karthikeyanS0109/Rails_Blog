@@ -34,11 +34,13 @@ class TagsController < ApplicationController
 
     respond_to do |format|
       if @tag.save
-        format.html { redirect_to tag_url(@tag), notice: "Tag was successfully created." }
+        flash[:success] = 'Tag was successfully created.'
+        format.html { redirect_to tag_url(@tag) }
         format.json { render :show, status: :created, location: @tag }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @tag.errors, status: :unprocessable_entity }
+        flash[:danger] = 'Tag creation failed.'
       end
     end
   end
@@ -47,11 +49,13 @@ class TagsController < ApplicationController
   def update
     respond_to do |format|
       if @tag.update(tag_params)
-        format.html { redirect_to tag_url(@tag), notice: "Tag was successfully updated." }
+        flash[:update] = 'Tag was successfully updated.'
+        format.html { redirect_to tag_url(@tag) }
         format.json { render :show, status: :ok, location: @tag }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @tag.errors, status: :unprocessable_entity }
+        flash[:danger]= 'Tag update failed.'
       end
     end
   end
@@ -61,7 +65,8 @@ class TagsController < ApplicationController
     @tag.destroy
 
     respond_to do |format|
-      format.html { redirect_to tags_url, notice: "Tag was successfully destroyed." }
+      flash[:danger] = 'Tag was successfully destroyed.'
+      format.html { redirect_to tags_url }
       format.json { head :no_content }
     end
   end

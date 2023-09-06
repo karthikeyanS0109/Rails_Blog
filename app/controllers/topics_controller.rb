@@ -3,7 +3,7 @@ class TopicsController < ApplicationController
 
   # GET /topics or /topics.json
   def index
-    @pagy,@topics = pagy(Topic.all,items:3)
+    @pagy,@topics = pagy(Topic.all,items:5)
   end
 
   # GET /topics/1 or /topics/1.json
@@ -25,12 +25,13 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.save
-        format.html { redirect_to topic_url(@topic), notice: "Topic was successfully created." }
-        format.json { render :show, status: :created, location: @topic }
+        flash[:success] = 'Topic was successfully created.'
+        format.html { redirect_to topics_path }
+        format.json { render :index, status: :created, location: @topic }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @topic.errors, status: :unprocessable_entity }
-        flash.now[:alert] = 'Topic could not be created. Please fix the errors.'
+        flash[:danger] = 'Topic creation failed.'
       end
     end
   end
@@ -39,11 +40,13 @@ class TopicsController < ApplicationController
   def update
     respond_to do |format|
       if @topic.update(topic_params)
-        format.html { redirect_to topic_url(@topic), notice: "Topic was successfully updated." }
+        flash[:update] = 'Topic was successfully updated.'
+        format.html { redirect_to topics_path }
         format.json { render :show, status: :ok, location: @topic }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @topic.errors, status: :unprocessable_entity }
+        flash[:danger] = 'Topic update failed.'
       end
     end
   end
@@ -52,7 +55,8 @@ class TopicsController < ApplicationController
   def destroy
     @topic.destroy
     respond_to do |format|
-      format.html { redirect_to topics_url, notice: "Topic was successfully destroyed." }
+      flash[:danger] = 'Topic was successfully destroyed.'
+      format.html { redirect_to topics_url }
       format.json { head :no_content }
     end
   end

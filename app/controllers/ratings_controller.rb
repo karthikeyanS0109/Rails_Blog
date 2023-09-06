@@ -4,9 +4,11 @@ class RatingsController < ApplicationController
     @post = @topic.posts.find(params[:post_id])
     @rating = @post.ratings.build(rating_params)
     if @rating.save
-      redirect_to topic_post_path(@topic, @post), notice: 'Rating added successfully.'
+      flash[:success] = 'Rating added successfully.'
+      redirect_to topic_post_path(@topic, @post)
     else
       render :new, status: :unprocessable_entity
+      flash[:danger] = 'Rating creation failed.'
     end
   end
 

@@ -52,13 +52,15 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         @rating_counts = @post.ratings.group(:value).count
-        format.html { redirect_to topic_post_path(@topic, @post), notice: "Post was successfully created." }
+        flash[:success] = 'Post was successfully created.'
+        format.html { redirect_to topic_post_path(@topic, @post) }
         format.json { render :show, status: :created, location: @post }
         format.js
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
         format.js { render "posts/errors" }
+        flash[:danger] = 'Post creation failed.'
       end
     end
   end
@@ -70,11 +72,13 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.update(post_params.except(:tags))
-        format.html { redirect_to topic_post_path(@topic), notice: "Post was successfully updated." }
+        flash[:success] = 'Post was successfully updated.'
+        format.html { redirect_to topic_post_path(@topic) }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
+        flash[:danger] = 'Post was not  updated.'
       end
     end
   end
@@ -85,8 +89,9 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to topic_posts_path(@topic), notice: "Post was successfully destroyed." }
+      format.html { redirect_to topic_posts_path(@topic) }
       format.json { head :no_content }
+      flash[:danger] = 'Post was successfully destroyed.'
     end
   end
 

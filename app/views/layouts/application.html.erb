@@ -14,13 +14,15 @@
 
   <body>
   <%= render 'layouts/header' %>
-  <div class="loading-spinner">
-    <div style="text-align: center">
-      <span class="loader"></span>
-  </div>
-  </div>
 
-  <p class="container d-flex justify-content-center"><%= alert %></p>
+  <% if flash[:success].present? %>
+    <p class="alert alert-success text-center auto-dismiss" role="alert"><%= flash[:success] %></p>
+  <% elsif flash[:danger].present? %>
+    <p class="alert alert-danger text-center auto-dismiss" role="alert"><%= flash[:danger] %></p>
+  <% elsif flash[:update].present? %>
+    <p class="alert alert-info text-center auto-dismiss" role="alert"><%= flash[:update] %></p>
+  <% end %>
+
 
   <%= yield %>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

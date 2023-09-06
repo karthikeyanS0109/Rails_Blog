@@ -7,18 +7,22 @@ class CommentRatingsController < ApplicationController
     @comment_rating.user_id = current_user.id
     @comment_rating.update(comment_ratings_params)
     if @comment_rating.save
-      redirect_to topic_post_path(@topic,@post), notice: 'Rating submitted successfully.'
+      flash[:success] = 'Rating submitted successfully.'
+      redirect_to topic_post_path(@topic,@post)
     else
-      redirect_to topic_post_path(@topic,@post), alert: 'Failed to submit rating.'
+      flash[:danger] = 'Failed to submit rating.'
+      redirect_to topic_post_path(@topic,@post)
     end
   end
 
   def update
     @comment_rating = @comment.comment_ratings.find_by(user_id: current_user.id)
     if @comment_rating.update(comment_ratings_params)
-      redirect_to topic_post_path(@topic,@post), notice: 'Rating updated successfully.'
+      flash[:success] = 'Rating updated successfully.'
+      redirect_to topic_post_path(@topic,@post)
     else
-      redirect_to topic_post_path(@topic,@post), alert: 'Failed to update rating.'
+      flash[:danger] = 'Failed to update rating.'
+      redirect_to topic_post_path(@topic,@post)
     end
   end
 
