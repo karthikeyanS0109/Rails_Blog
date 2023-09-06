@@ -15,4 +15,18 @@ class Post < ApplicationRecord
     where(created_at: from_date.beginning_of_day..to_date.end_of_day)
   }
 
+  def update_rating_average
+    new_average = ratings.average(:value).to_f.round(2)
+    update_attribute(:rating_average, new_average)
+  end
+
+  def counting_of_created_comments
+    total_count = comments.count
+    update_attribute(:comment_count, total_count)
+  end
+
+  def counting_of_deleted_comments
+    total_count = comments.count
+    update_attribute(:comment_count, total_count)
+  end
 end

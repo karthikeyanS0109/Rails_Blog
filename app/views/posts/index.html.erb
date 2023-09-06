@@ -23,14 +23,14 @@
           <td><%= post.title%></td>
           <td><%= post.description %></td>
           <td><%= post.topic.title %></td>
-          <td><% if post.ratings.any? %>
-              <%= post.ratings.average(:value).round(1) %>
+          <td><% if post.rating_average > 0 %>
+               <%= post.rating_average %>
             <% else %>
               <p>No ratings available</p>
             <% end %>
           </td>
-          <td><% if post.comments.any? %>
-              <%= post.comments.count %>
+          <td><% if post.comment_count.present? %>
+              <%= post.comment_count %>
             <% else %>
               <p>No comments available</p>
             <% end %>
@@ -60,15 +60,17 @@
     <p>No Posts available, you can also create the posts and view this page.</p>
   <% end %>
 
-
-<div id="form-container">
-</div>
+<% if @topic.present? %>
+  <div id="form-container">
+  </div>
   <div id="loading-spinner">
   </div>
 
-<button id="form-btn">New Post</button>
-<button id="cancel-btn">Cancel</button>
+  <button id="form-btn">New Post</button>
+  <button id="cancel-btn">Cancel</button>
+    <% end %>
 
+<% if @topic.present? %>
   <br><br>
   <h1>Filtered Posts for <%= @topic.title %></h1>
   <%= form_tag(topic_posts_path(@topic), method: :get, id: "date-filter-form") do %>
@@ -80,18 +82,17 @@
 
     <%= submit_tag "Show Details" %>
   <% end %>
-
-<br>
-
+  <br>
   <ul>
     <% @filtered_posts.each do |post| %>
       <li><%= post.title %></li>
     <% end %>
   </ul>
+  <% end %>
 
 </div>
 
-
+<% if @topic.present? %>
 <script>
     let container = $("#post-container");
     let formContainer = $("#form-container");
@@ -138,3 +139,4 @@
         $(".datepicker").datepicker();
     });
 </script>
+<% end %>
