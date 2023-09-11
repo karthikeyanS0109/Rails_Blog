@@ -29,8 +29,8 @@
               <p>No ratings available</p>
             <% end %>
           </td>
-          <td><% if post.comment_count.present? %>
-              <%= post.comment_count %>
+          <td><% if post.comments_count.present?  && post.comments_count > 0 %>
+              <%= post.comments_count %>
             <% else %>
               <p>No comments available</p>
             <% end %>
@@ -98,8 +98,8 @@
     let formContainer = $("#form-container");
     let formBtn = $("#form-btn");
     let cancelBtn = $("#cancel-btn");
-    let loadingSpinner = $(".loading-spinner"); // Make sure this class matches your HTML
-    let form = null;
+    // let loadingSpinner = $(".loading-spinner"); // Make sure this class matches your HTML
+    // let form = null;
 
     // formContainer.hide(); // Hide form container initially
     cancelBtn.hide();
@@ -112,7 +112,7 @@
                 success: function(data){
                     formBtn.hide();
                     cancelBtn.show();
-                    form_set(); // Corrected function call
+                    // form_set(); // Corrected function call
                 }
             });
         });
@@ -122,15 +122,6 @@
             formContainer.empty();
             cancelBtn.hide();
         });
-
-        function form_set(){
-            setTimeout(function (){
-                form = $(".new_form");
-                form.on("submit", function (){
-                    loadingSpinner.show(); // Show loading spinner when form is submitted
-                });
-            }, 100);
-        }
     });
 </script>
 

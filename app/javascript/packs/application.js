@@ -11,12 +11,14 @@ import "channels"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+import "bootstrap"
+import "bootstrap/scss/bootstrap.scss"
 //
 // console.log("Hello");
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    var flashMessages = document.querySelectorAll('.auto-dismiss');
+    let flashMessages = document.querySelectorAll('.auto-dismiss');
 
     flashMessages.forEach(function(message) {
         setTimeout(function() {
@@ -24,4 +26,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000); // 5000 milliseconds (5 seconds)
     });
 });
+
 
