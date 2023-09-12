@@ -11,35 +11,32 @@
     </div>
   <% end %>
 
-  <div class="field w-50 h-50 ms-5">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+  <div class="field form-group d-flex justify-content-center">
+    <%#= form.label :title %>
+    <%= form.text_field :title,class:"form-control w-25", placeholder:"Add Title to the post" %>
   </div>
   <br>
 
-  <div class="field w-50 h-50 ms-2">
-    <%= form.label :description %>
-    <%= form.text_field :description %>
+  <div class="field form-group d-flex justify-content-center">
+    <%#= form.label :description %>
+    <%= form.text_field :description,class:"form-control w-25", placeholder:"Add Description to the post" %>
   </div>
-<br>
-  <div class="field w-50 h-50 ms-5">
-    <%= form.label :topic_id %>
-    <%= form.text_field :topic_id %>
-  </div>
-<br>
-  <div class="field w-50 h-50 ms-5">
-    <%= form.label :tags %>
-    <%= form.text_field :tags, value: @post.tags.map(&:name).join(",") %>
+  <br>
+  <div class="field form-group d-flex justify-content-center">
+    <%#= form.label :tags %>
+    <%= form.text_field :tags, value: @post.tags.map(&:name).join(","),class:"form-control w-25", placeholder:"Add Tags to the posts" %>
   </div>
 
   <br>
-
-  <%= form.file_field :image%>
+  <div class="field form-group d-flex justify-content-center">
+    <%= form.file_field :image,class:"form-control w-25", placeholder:"Add Images to the posts"%>
+  </div>
   <br><br>
 
-  <div class="actions">
-    <%= form.submit "Submit", id: "post-submit" %>
+  <div class="actions field form-group d-flex justify-content-center">
+    <%= form.submit "Submit", id: "post-submit", class:"btn btn-outline-success" %>
   </div>
+  <br>
 <% end %>
 
 
