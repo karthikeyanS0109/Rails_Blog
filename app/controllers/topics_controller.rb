@@ -1,9 +1,11 @@
 class TopicsController < ApplicationController
   before_action :set_topic, only: %i[ show edit update destroy ]
+  before_action :redirect_to_topic_path, only: [:edit]
 
   # GET /topics or /topics.json
   def index
     @pagy,@topics = pagy(Topic.all,items:5)
+
   end
 
   # GET /topics/1 or /topics/1.json
@@ -25,6 +27,7 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.save
+        # CreateTopicJob.perform_later(current_user)
         flash[:success] = 'Topic was successfully created.'
         format.html { redirect_to topics_path }
         format.json { render :index, status: :created, location: @topic }
@@ -61,6 +64,14 @@ class TopicsController < ApplicationController
     end
   end
 
+  def search
+    search = "%#{params[:search]}%"
+    @topics = Topic.where("title LIKE ?", search)
+  end
+
+  def sample
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_topic
@@ -71,4 +82,7 @@ class TopicsController < ApplicationController
     def topic_params
       params.require(:topic).permit(:title, :genre)
     end
+  def redirect_to_topic_path
+    render plain: "Hello World"
+  end
 end

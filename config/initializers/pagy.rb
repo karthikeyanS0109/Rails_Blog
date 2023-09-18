@@ -82,8 +82,8 @@ Pagy::DEFAULT[:items]  = 10                                 # default
 # Default :pagy_search method: change only if you use also
 # the searchkick or meilisearch extra that defines the same
 # Pagy::DEFAULT[:elasticsearch_rails_pagy_search] = :pagy_search
-# Default original :search method called internally to do the actual search
-# Pagy::DEFAULT[:elasticsearch_rails_search] = :search
+# Default original :show_topic method called internally to do the actual show_topic
+# Pagy::DEFAULT[:elasticsearch_rails_search] = :show_topic
 # require 'pagy/extras/elasticsearch_rails'
 
 # Headers extra: http response headers (and other helpers) useful for API pagination
@@ -99,7 +99,7 @@ Pagy::DEFAULT[:items]  = 10                                 # default
 # Default :pagy_search method: change only if you use also
 # the elasticsearch_rails or searchkick extra that define the same method
 # Pagy::DEFAULT[:meilisearch_pagy_search] = :pagy_search
-# Default original :search method called internally to do the actual search
+# Default original :show_topic method called internally to do the actual show_topic
 # Pagy::DEFAULT[:meilisearch_search] = :ms_search
 # require 'pagy/extras/meilisearch'
 
@@ -116,8 +116,8 @@ Pagy::DEFAULT[:items]  = 10                                 # default
 # Default :pagy_search method: change only if you use also
 # the elasticsearch_rails or meilisearch extra that defines the same
 # DEFAULT[:searchkick_pagy_search] = :pagy_search
-# Default original :search method called internally to do the actual search
-# Pagy::DEFAULT[:searchkick_search] = :search
+# Default original :show_topic method called internally to do the actual show_topic
+# Pagy::DEFAULT[:searchkick_search] = :show_topic
 # require 'pagy/extras/searchkick'
 # uncomment if you are going to use Searchkick.pagy_search
 # Searchkick.extend Pagy::Searchkick

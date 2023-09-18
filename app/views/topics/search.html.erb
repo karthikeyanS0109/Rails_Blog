@@ -1,0 +1,26 @@
+<h1>Results</h1>
+<div class="topic">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Genre</th>
+      <th colspan="4"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <%= render "topics/topic" %>
+    </tbody>
+  </table>
+</div>
+<br>
+<div class="container d-flex justify-content-center">
+</div>
+
+<%= link_to "back To Topics", root_path %>
+<script>
+  $(document).ready(function(){
+    history.pushState(null, null, "<%= search_topics_path(@topic) %>");
+  })
+</script>

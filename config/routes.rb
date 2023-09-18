@@ -9,10 +9,11 @@ Rails.application.routes.draw do
   end
 
   resources :topics do
+    get 'search', on: :collection
     resources :posts do
       post "read_unread", on: :member
       resources :comments do
-        resources :comment_ratings,only: [:create, :update]
+        resources :comment_ratings, only: [:create, :update]
       end
       resources :ratings, only: [:create]
     end

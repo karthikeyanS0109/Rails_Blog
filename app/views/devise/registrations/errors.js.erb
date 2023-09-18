@@ -1,0 +1,10 @@
+setTimeout(function(){
+    $(".modal-body").prepend(
+        '<div id="error-explanation">'+
+        "<%= j  render "devise/shared/error_messages", resource: resource  %>"+
+        "</div"
+    )
+    setTimeout(function(){
+        $("#error-explanation").remove();
+    },500);
+},1000)

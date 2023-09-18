@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+topics = [
+  { title: "Fate", genre: "Anime" },
+  { title: "Haikyu", genre: "Anime" },
+  { title: "Black Basket", genre: "Anime" }
+]
+
+
+topics.each do |topic|
+  Topic.create(title: topic[:title], genre: topic[:genre])
+end

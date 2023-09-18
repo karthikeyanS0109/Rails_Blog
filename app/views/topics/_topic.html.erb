@@ -1,0 +1,11 @@
+<% @topics.each do |topic| %>
+  <tr>
+    <td><%= topic.title %></td>
+    <td><%= topic.genre %></td>
+<!--    <td><%#= check_topic(topic.title) %></td>-->
+    <td><%= link_to 'Show', topic, class:"btn btn-info" %></td>
+    <td><%= link_to 'Edit', edit_topic_path(topic), class: "btn btn-success" %></td>
+    <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+    <td><%= link_to 'Posts_list', topic_posts_path(topic), class: "btn btn-info" %></td>
+  </tr>
+<% end %>

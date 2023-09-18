@@ -1,0 +1,8 @@
+<%= form_tag(search_topics_path, method: :get, class: 'form-inline') do %>
+  <div class="input-group w-25">
+    <%= text_field_tag :search, params[:search], class: 'form-control w-25', placeholder: 'Search by name' %>
+    <div class="input-group-append ms-3">
+      <%= submit_tag 'Search', class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>
