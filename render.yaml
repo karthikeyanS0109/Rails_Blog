@@ -1,7 +1,7 @@
 databases:
   - name: Hello_rails
     databaseName: Hello_rails
-    user: postgres
+    user: postgres-user
     password: azazel
 
 services:
