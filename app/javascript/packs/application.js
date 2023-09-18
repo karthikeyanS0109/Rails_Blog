@@ -27,4 +27,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+someAsyncFunction()
+    .then(result => {
+        // Handle the successful result here
+        console.log(`Success: ${result}`);
+    })
+    .catch(error => {
+        // Handle the error here
+        console.error(`Error: ${error.message}`);
+    });
+
 
