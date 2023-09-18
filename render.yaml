@@ -1,8 +1,8 @@
 databases:
   - name: Hello_rails
-    databaseName: Hello_rails
-    user: postgres-user
-    password: azazel
+    databaseName: hellorails_04fc
+    user: hellorailsuser
+    password: qhccrzZJyeVNqcmFwkuB0IunDRpmbyX6
 
 services:
   - type: web
