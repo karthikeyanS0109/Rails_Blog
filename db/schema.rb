@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2023_09_07_074926) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -42,8 +45,8 @@ ActiveRecord::Schema.define(version: 2023_09_07_074926) do
 
   create_table "comment_ratings", force: :cascade do |t|
     t.integer "value"
-    t.integer "user_id", null: false
-    t.integer "comment_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "comment_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["comment_id"], name: "index_comment_ratings_on_comment_id"
@@ -52,7 +55,7 @@ ActiveRecord::Schema.define(version: 2023_09_07_074926) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
-    t.integer "post_id", null: false
+    t.bigint "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
@@ -62,7 +65,7 @@ ActiveRecord::Schema.define(version: 2023_09_07_074926) do
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.integer "topic_id", null: false
+    t.bigint "topic_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
@@ -72,22 +75,22 @@ ActiveRecord::Schema.define(version: 2023_09_07_074926) do
   end
 
   create_table "posts_users_read_status", id: false, force: :cascade do |t|
-    t.integer "post_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "post_id", null: false
+    t.bigint "user_id", null: false
     t.index ["post_id", "user_id"], name: "index_posts_users_read_status_on_post_id_and_user_id"
   end
 
   create_table "ratings", force: :cascade do |t|
     t.integer "value"
-    t.integer "post_id", null: false
+    t.bigint "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_ratings_on_post_id"
   end
 
   create_table "taggables", force: :cascade do |t|
-    t.integer "post_id", null: false
-    t.integer "tag_id", null: false
+    t.bigint "post_id", null: false
+    t.bigint "tag_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_taggables_on_post_id"
